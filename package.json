@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/revaneet/TaskApp/issues"
   },
-  "homepage": "https://github.com/revaneet/TaskApp#readme"
+  "homepage": "https://github.com/revaneet/TaskApp#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "sqlite3": "^4.1.1"
+  }
 }
