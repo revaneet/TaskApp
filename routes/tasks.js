@@ -14,8 +14,7 @@ route.post('/',async(req,res) =>{
         desc : req.body.desc,
         dueDate : new Date(req.body.dueDate),
         status : req.body.status,
-        priority : req.body.priority,
-        notes : req.body.notes,
+        priority : req.body.priority       
     })
     res.status(201)
        .send({
