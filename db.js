@@ -12,7 +12,7 @@ const Tasks = db.define('task',{
         autoIncrement : true
     },
     title:{
-        type : Sequelize.STRING(),
+        type : Sequelize.STRING,
         allowNull : false
     },
     desc:{
@@ -30,12 +30,25 @@ const Tasks = db.define('task',{
     priority:{
         type : Sequelize.ENUM('high','medium','low'),
         defaultValue : 'medium'
+    },   
+})
+
+const Notes = db.define('note' , {
+    id:{
+        type : Sequelize.INTEGER,
+        primaryKey : true,
+        autoIncrement : true
     },
-    notes:{
+    taskId:{
+        type : Sequelize.INTEGER,
+        allowNull : false
+    },
+    note:{
         type : Sequelize.TEXT,
-        allowNull : true
+        allowNull : false
     }
+
 })
 module.exports={
-    db , Tasks
+    db , Tasks , Notes
 }
