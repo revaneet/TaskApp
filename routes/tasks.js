@@ -14,14 +14,13 @@ route.post('/',async(req,res) =>{
         desc : req.body.desc,
         dueDate : new Date(req.body.dueDate),
         status : req.body.status,
-        priority : req.body.priority       
+        priority : req.body.priority,       
     })
     res.status(201)
        .send({
            success : 'New task added',
            data : newTask
-       })
-
-
+       })  
 })
+
 module.exports = route

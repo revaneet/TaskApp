@@ -1,27 +1,33 @@
 #header-div{
     text-align: center;
+    
 }
 #main-content{
     align-items: center;
     text-align: center;
-    
+    margin :20px;
+    padding:20px;
 }
 #add-task-div{
     text-align: center;
     padding: 20px;
+    margin-bottom: 50px;
     margin-left: 100px;
     border-style: solid;
-    border-width: 1px;
+    border-width: .8px;
     border-color: black;
-    width: 500px;
+    max-height: 550px;
 }
 #all-tasks-div{
     text-align: center;
     padding: 20px;
-    margin-left: 100px;
+   margin-left: 10px;
     border-style: solid;
-    border-width: 1px;
+    border-width: .8px;
     border-color: black;
-    height: 550px;
-    width: 500px;
+    max-height: 550px;
+    overflow-y: auto;
+}
+.complete{
+    text-decoration: line-through;
 }
