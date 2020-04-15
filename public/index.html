@@ -3,24 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="styles/indexStyle.css">
     <script src="scripts/indexScript.js"></script>
 
     <title>Document</title>
 </head>
 <body>
-    <div class="jumbotron jumbotron-fluid">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <a class="navbar-brand" href="#">Logo</a>        
+    </nav>
+    <!-- <div class="jumbotron jumbotron-fluid">
         <div class="container">
           <h1>TaskApp</h1>
          
         </div>
-      </div>
-    <div class="row" id="Main-Content">
-        <div class="col-md-5" id="add-task-div" >
-            <h2>Add New Task </h2>
+      </div> -->
+    <div class="card bg-dark text-white" id="add-task-card">
+        <div class="card-header" data-toggle="collapse" data-target="#add-task-card-body">
+            <h2>Add Task</h2>
+        </div>
+        <div class="card-body collapse" id="add-task-card-body">
             <form onsubmit="postNewTask(this)">
                 <div class="form-group">
                   <label >Title</label>
@@ -56,30 +64,20 @@
                 <button type="submit" class="btn btn-primary" id="add-task-button">Add</button>                
             </form>
         </div>
-        <div class="col-md-5" id="all-tasks-div">
-            <div class="card text-white bg-dark mb-3" >
-                <div class="card-header">
-                 <h1>All Tasks </h1>
-                </div>
-                <div class="table-responsive">
-                  <table class="card-table table">
-                    <thead>
-                        <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">Title</th>
-                          <th scope="col">Due-Date</th>                          
-                        </tr>
-                      </thead>
-                      <tbody id="table-body">
-  
-                      </tbody>
-
-                  </table>
-                </div>
-            </div>
+    </div>
+    
+    <div class="card bg-light text-dark" id="all-tasks-card">
+        <div class="card-header">
+            <h1>All Tasks </h1>
+        </div>
+        <div class="card-body" id="all-tasks-card-body">
 
         </div>
-
+        
     </div>
+
+       
+
+    
 </body>
 </html>
