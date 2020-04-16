@@ -11,9 +11,10 @@ app.use(express.json())
 app.use('/',express.static(__dirname + '/public') )
 app.use('/tasks',taskRoute)
 
+app.set('port',( process.env.PORT || 5000))
 db.sync()
   .then(() =>{
-      app.listen(6543)
+      app.listen(app.get('port'))
       console.log("server listening")
   })
   .catch((err) =>{
