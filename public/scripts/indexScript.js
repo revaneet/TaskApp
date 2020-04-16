@@ -33,11 +33,6 @@ async function postNewTask(theForm)
         alert("New Task added")
     }   
 }
-// function toggleTaskStatus(index){
-//     this.tasks[index].isCompleted = !this.tasks[index].isCompleted;
-    
-//     this.loadTasks();
-// }
 async function getSelectedTask(id)
 {
     const resp = await fetch('/tasks/'+id,{
@@ -139,20 +134,48 @@ async function onTaskClick(id)
     }
     
 }
+async function toggleTaskStatus(id){
+    
+    var task = await getSelectedTask(id)
+    var newStatus = task.status === 'completed' ? 'incomplete' : 'completed'
+    let response = await fetch('/tasks/'+id,{
+        method : 'PATCH',
+        headers :{
+            'Content-Type' : 'application/json',
+            'Accept': 'application/json'            
+        },
+        body : JSON.stringify({
+            status : newStatus,
+            dueDate : task.dueDate,
+            priority : task.priority
+
+        })
+    })
+    let result = response.json()
+    if(result.ok)
+    {
+        alert("Task edited successfully !")
+    }
+    loadTasks()
+}
 async function generateAllTasksHtml(task){
     return `
     <div class="card bg-dark text-white" id="task-card-${task.id}">
-        <div class="card-header" onclick="onTaskClick(${task.id})">
+        <div class="card-header">
             <div class="row">
                 <div class ="col-md-1" id="taskId">
-                    ${task.id}
-
+                    <lable>
+                        <input id="toggleTaskStatus" type="checkbox" onchange="toggleTaskStatus(${task.id})" value="" class="" ${task.status === 'completed' ? 'checked' :'' } ></input>
+                    </lable>
                 </div>
-                <div class ="col-md-6">
+                <div class ="col-md-7 ${task.status === 'completed' ? 'completed' :'' }">
                     ${task.title}
                 </div>
                 <div class ="col-md-3">
                     ${task.dueDate}
+                </div>
+                <div class ="col-md-1" >
+                    <button class="btn btn-danger" type="button"  onclick="onTaskClick(${task.id})" >  &raquo </button>
                 </div>
             </div>
         </div>
@@ -173,12 +196,12 @@ async function generateTaskHtml(task)
 {
     return ` 
     <ul class="list-group list-group-flush">
-        <li class="list-group-item">${task.desc}</li>
-        <li class="list-group-item">${task.status}</li>
-        <li class="list-group-item">${task.priority}</li>
-        <li class="list-group-item">${task.dueDate}</li>
+        <li class="list-group-item"><h6>Description </h6> ${task.desc}</li>
+        <li class="list-group-item"><h6>Status </h6> ${task.status}</li>
+        <li class="list-group-item"><h6>Priority </h6> ${task.priority}</li>
+        <li class="list-group-item"><h6>Due Date </h6> ${task.dueDate}</li>
     </ul>
-    <div class="col-md-12 mt-4  text-center">
+    <div class="col-md-12 mt-2 mb-2  text-center">
         <button class="btn btn-danger" type="button"  onClick="onEditTaskClick(${task.id})" >Edit Task</button>
     </div>
 

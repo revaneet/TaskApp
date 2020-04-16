@@ -8,7 +8,7 @@
     max-height: 550px;
     overflow-y: auto;
 }
-.complete{
+.completed{
     text-decoration: line-through;
 }
 #add-task-card{
@@ -36,4 +36,7 @@
     min-height: 300px;
     min-width: 550px;
     margin-left: 25px;
+}
+#order-dropdown{
+    margin-left: 100px;
 }
