@@ -16,7 +16,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <a class="navbar-brand" href="#">Logo</a>        
+        <a class="navbar-brand" href="#">TaskApp</a>        
     </nav>
     <!-- <div class="jumbotron jumbotron-fluid">
         <div class="container">
@@ -62,12 +62,22 @@
                       <option value="low">Low</option>                 
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary" id="add-task-button">Add</button>                
+                <button type="submit" class="btn btn-danger btn-md btn-block" id="add-task-button">Add</button>                
             </form>
         </div>
     </div>
-    
-    <div class="card bg-light text-dark" id="all-tasks-card">
+    <div class="dropdown">
+        <button type="button" class="btn btn-dark dropdown-toggle text-white" data-toggle="dropdown">
+          Sort Tasks By 
+        </button>
+        <ul class="dropdown-menu" id="orderUl">
+          <li class="dropdown-item" >dueDate</li>
+          <li class="dropdown-item" >status</li>
+          <li class="dropdown-item" >priority</li>
+          <li class="dropdown-item" >default</li>
+          </ul>
+      </div>
+    <div class="card bg-danger text-light" id="all-tasks-card">
         <div class="card-header">
             <h1>All Tasks </h1>
         </div>
@@ -89,11 +99,6 @@
             <!-- Modal body -->
             <div class="modal-body">
                 <form onsubmit="patchSelectedTask(this)" >
-                    <div class="form-group">
-                        <label id="idEdit" style="display: none;"></label>
-                    </div>
-                    
-                
                     <div class="form-group">
                         <label >Due Date</label>
                         <input type="date" class="form-control" id="dueDateEdit" >

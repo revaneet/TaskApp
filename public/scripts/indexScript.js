@@ -5,7 +5,7 @@ async function getTasks()
         headers :{
             'Content-Type' : 'application/json',
             'Accept': 'application/json'
-        }
+        }        
     })
     const tasks = await resp.json()
     return tasks
@@ -178,8 +178,8 @@ async function generateTaskHtml(task)
         <li class="list-group-item">${task.priority}</li>
         <li class="list-group-item">${task.dueDate}</li>
     </ul>
-    <div class="col-md-"2">
-        <button class="btn btn-primary" type="button"  onClick="onEditTaskClick(${task.id})" >Edit Task</button>
+    <div class="col-md-12 mt-4  text-center">
+        <button class="btn btn-danger" type="button"  onClick="onEditTaskClick(${task.id})" >Edit Task</button>
     </div>
 
     `
@@ -190,7 +190,7 @@ async function generateNotesTemplate(id)
     <div class=" card-header input-group mb-3">
         <input type="text" class="form-control" placeholder="Compete it asap" id="input-${id}" >
         <div class="input-group-append">
-            <button class="btn btn-primary" type="button" id="add-note-bt-${id}" onClick="postNewNote(${id})">Add Note</button>
+            <button class="btn btn-danger" type="button" id="add-note-bt-${id}" onClick="postNewNote(${id})">Add Note</button>
         </div>
     </div>
     </div class="card-body">
@@ -222,12 +222,104 @@ async function loadSelectedTask(task,notes)
     }
     document.getElementById("ul-notes-"+task.id).innerHTML = taskHtml
 }
+async function sortTasksByDueDate(tasks)
+{
+    tasks.sort( function (a,b) {
+        var dateA = new Date(a.dueDate) , dateB = new Date(b.dueDate)
+        return dateA - dateB 
+    })
+    console.log(tasks)
+    console.log("here")
+}
+async function sortTasksByPriority(tasks)
+{
+    tasks.sort( function (a,b) {
+        var dateA = new Date(a.dueDate) , dateB = new Date(b.dueDate)
+        return dateA - dateB 
+    })
+}
+async function sortTasksByStatus(tasks)
+{
+    tasks.sort( function (aEnum,bEnum) {
+        var a,b;
+        switch(aEnum.status)
+        {
+            case "incomplete":
+                a = 1
+                break
+            case "completed":
+                a = 0 
+                break
+
+        }
+        switch(bEnum.status)
+        {
+            case "incomplete":
+                b = 1
+                break
+            case "completed":
+                b = 0 
+                break
+
+        }
+        if(a>b) return -1
+        else if(a<b) return 1 
+        return 0
+    })
+}
+async function sortTasksByPriority(tasks)
+{
+    tasks.sort( function (aEnum,bEnum) {
+        var a,b;
+        switch(aEnum.priority)
+        {
+            case "high":
+                a = 3
+                break
+            case "medium":
+                a = 2 
+                break
+            case "low":
+                a = 1 
+                break
+
+        }
+        switch(bEnum.priority)
+        {
+            case "high":
+                b = 3
+                break
+            case "medium":
+                b = 2 
+                break
+            case "low":
+                b = 1 
+                break
+
+        }
+        if(a>b) return -1
+        else if(a<b) return 1 
+        return 0
+    })
+}
 async function loadTasks(){
     
     var tasks = await getTasks()
     console.log(tasks)
     
-    // let taskHtml = tasks.reduce ( (html,task,index) => html+=this.generateTaskHtml(task,index),'')
+    if(localStorage["order"]==="dueDate")
+    {
+        sortTasksByDueDate(tasks)
+    }
+    else if(localStorage["order"]==="priority")
+    {
+        sortTasksByPriority(tasks)
+    }
+    else if(localStorage["order"]==="status")
+    {
+        sortTasksByStatus(tasks)
+    }
+
     let taskHtml =''   
     for (var i = 0; i < tasks.length; i++) {
         var task = tasks[i]
@@ -236,4 +328,24 @@ async function loadTasks(){
     document.getElementById("all-tasks-card-body").innerHTML = taskHtml
 }
 
-loadTasks()
+
+
+$(document).ready(function($){
+    localStorage["order"]="default"
+
+    function getEventTarget(e) {
+        e = e || window.event
+        return e.target || e.srcElement 
+    }
+    
+    var ul = document.getElementById('orderUl')
+    ul.onclick = function(event) {
+        var target = getEventTarget(event)
+        var order = target.innerHTML
+        localStorage["order"]=order
+        console.log(localStorage["order"])
+        loadTasks()
+        
+    }
+    loadTasks()
+})
