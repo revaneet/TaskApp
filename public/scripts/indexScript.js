@@ -27,7 +27,7 @@ async function postNewTask(theForm)
             priority : theForm.priority.value 
         })
     })
-    let result = response.json()
+    let result = await response.json()
     if(result.ok)
     {
         alert("New Task added")
@@ -73,8 +73,14 @@ async function postNewNote(id)
             note : note,            
         })
     })
-    let result = response.json()
-    getNotesOfSelectedTask(id)
+    let result = await response.json()
+    if(result.ok)
+    {
+        alert("New Noted added")
+    }
+    var task = await getSelectedTask(id)
+    var notes = await getNotesOfSelectedTask(id)
+    loadSelectedTask(task,notes)
 
 }
 async function patchSelectedTask(theForm)
@@ -92,7 +98,7 @@ async function patchSelectedTask(theForm)
             priority : theForm.priorityEdit.value 
         })
     })
-    let result = response.json()
+    let result = await response.json()
     if(result.ok)
     {
         alert("Task edited successfully !")
@@ -151,7 +157,7 @@ async function toggleTaskStatus(id){
 
         })
     })
-    let result = response.json()
+    let result = await response.json()
     if(result.ok)
     {
         alert("Task edited successfully !")
