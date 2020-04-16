@@ -27,6 +27,30 @@ route.get('/:id',async(req,res) =>{
 
 
 })
+route.patch('/:id' , async(req,res) =>{
+    if (isNaN(Number(req.params.id))) {
+        return res.status(400).send({
+          error: 'task id must be an integer',
+        })
+    }
+    const task = await Tasks.update({
+        dueDate : new Date(req.body.dueDate),
+        status : req.body.status,
+        priority : req.body.priority
+    },{
+        where : {id : req.params.id},
+        plain: true 
+    })
+
+    if (!task) {
+        return res.status(404).send({
+        error: 'Cannot update task.Try again later !',
+        })
+    }
+    res.send(task)
+    
+
+})
 route.get('/:id/notes',async(req,res) =>{
 
     if (isNaN(Number(req.params.id))) {

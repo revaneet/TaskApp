@@ -30,6 +30,7 @@
         </div>
         <div class="card-body collapse" id="add-task-card-body">
             <form onsubmit="postNewTask(this)">
+                
                 <div class="form-group">
                   <label >Title</label>
                   <input type="text" class="form-control" id="title" placeholder="Enter title">
@@ -74,6 +75,53 @@
 
         </div>
         
+    </div>
+    <div class="modal" id="editModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+      
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Edit Task</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+      
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form onsubmit="patchSelectedTask(this)" >
+                    <div class="form-group">
+                        <label id="idEdit" style="display: none;"></label>
+                    </div>
+                    
+                
+                    <div class="form-group">
+                        <label >Due Date</label>
+                        <input type="date" class="form-control" id="dueDateEdit" >
+                    </div>
+    
+                    <div class="form-group">
+                        <label >Status</label>
+                        <select class="form-control" id="statusEdit">
+                          <option value="incomplete" selected>Incomplete</option>
+                          <option value="completed">Completed</option>                  
+                        </select>
+                    </div>
+    
+                    <div class="form-group">
+                        <label >Priority</label>
+                        <select class="form-control" id="priorityEdit">
+                          <option value="medium" selected>Medium</option>
+                          <option value="high">High</option>                      
+                          <option value="low">Low</option>                 
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-danger" id="buttonEdit">Done</button>                
+                </form>
+              
+            </div>
+      
+      
+          </div>
     </div>
 
        

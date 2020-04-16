@@ -82,6 +82,42 @@ async function postNewNote(id)
     getNotesOfSelectedTask(id)
 
 }
+async function patchSelectedTask(theForm)
+{
+    var taskId = localStorage["taskToUpdateId"]
+    let response = await fetch('/tasks/'+taskId,{
+        method : 'PATCH',
+        headers :{
+            'Content-Type' : 'application/json',
+            'Accept': 'application/json'            
+        },
+        body : JSON.stringify({
+            dueDate : theForm.dueDateEdit.value,
+            status : theForm.statusEdit.value,
+            priority : theForm.priorityEdit.value 
+        })
+    })
+    let result = response.json()
+    if(result.ok)
+    {
+        alert("Task edited successfully !")
+    }
+    
+}
+async function onEditTaskClick(id)
+{
+    
+    var task = await getSelectedTask(id)
+    
+    localStorage["taskToUpdateId"] = task.id
+    document.getElementById("dueDateEdit").value = task.dueDate
+    document.getElementById("statusEdit").value = task.status
+    document.getElementById("priorityEdit").value= task.priority
+    
+    $("#editModal").modal();
+
+
+}
 async function onTaskClick(id)
 {
     var taskEle = document.getElementById("task-card-body-"+id)
@@ -112,10 +148,10 @@ async function generateAllTasksHtml(task){
                     ${task.id}
 
                 </div>
-                <div class ="col-md-7">
+                <div class ="col-md-6">
                     ${task.title}
                 </div>
-                <div class ="col-md-4">
+                <div class ="col-md-3">
                     ${task.dueDate}
                 </div>
             </div>
@@ -142,6 +178,9 @@ async function generateTaskHtml(task)
         <li class="list-group-item">${task.priority}</li>
         <li class="list-group-item">${task.dueDate}</li>
     </ul>
+    <div class="col-md-"2">
+        <button class="btn btn-primary" type="button"  onClick="onEditTaskClick(${task.id})" >Edit Task</button>
+    </div>
 
     `
 }
