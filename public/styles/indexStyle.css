@@ -27,3 +27,13 @@
     background-color: rgb(50, 56, 62,.9);
     margin-top: 5px;
 }
+.task{
+    min-height: 300px;
+    min-width: 400px;
+    margin-left: 25px;
+}
+.notes{
+    min-height: 300px;
+    min-width: 550px;
+    margin-left: 25px;
+}

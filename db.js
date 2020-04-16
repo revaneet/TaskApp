@@ -17,6 +17,7 @@ const Tasks = db.define('task',{
     },
     desc:{
         type : Sequelize.TEXT,
+        defaultValue : "None",
         allowNull : true
     },
     dueDate:{

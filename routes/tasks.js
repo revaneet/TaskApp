@@ -1,5 +1,6 @@
 const { Router } = require('express')
-const { Tasks } = require('../db')
+const { Tasks , Notes} = require('../db')
+const {Op} = require('sequelize')
 
 const route = Router()
 
@@ -25,6 +26,35 @@ route.get('/:id',async(req,res) =>{
     res.send(task)
 
 
+})
+route.get('/:id/notes',async(req,res) =>{
+
+    if (isNaN(Number(req.params.id))) {
+        return res.status(400).send({
+          error: 'task id must be an integer',
+        })
+    }
+    var id = req.params.id
+    const notes = await Notes.findAll({
+        attributes : ['note'],
+        where :{
+            taskId : id
+        }
+    })
+    res.send(notes)
+
+
+})
+route.post('/:id/notes',async(req,res) =>{
+    const newNote = await Notes.create({
+        taskId : req.body.taskId,
+        note : req.body.note,           
+    })
+    res.status(201)
+       .send({
+           success : 'New note added',
+           data : newNote
+       })  
 })
 
 route.post('/',async(req,res) =>{
